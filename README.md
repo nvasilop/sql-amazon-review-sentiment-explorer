@@ -22,6 +22,16 @@ In this project, I practiced basic SQL commands:
 All examples live in **`sql/02_analysis_queries.sql`** once the database is loaded.
 
 ---
+## Why Python Is Used
+
+Python is only used for:
+
+- reading the CSV file
+- simple preprocessing
+- creating sentiment labels
+- importing the data into SQLite
+
+The main focus of the project is SQL analysis using SQLite queries.
 
 ## Why this is related to NLP
 
