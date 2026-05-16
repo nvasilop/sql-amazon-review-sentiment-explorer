@@ -19,7 +19,7 @@ In this project, I practiced basic SQL commands:
 - `CASE` … `WHEN`
 - Basic `JOIN`
 
-All examples live in **`sql/02_analysis_queries.sql`** once the database is loaded.
+All examples live under **`sql/`** in numbered topic files (`02_basic_select_queries.sql` through `08_join_queries.sql`) once the database is loaded.
 
 ---
 ## Why Python Is Used
@@ -41,7 +41,7 @@ NLP studies **human language** in text. Here the “documents” are **reviews**
 
 ## Example questions answered with SQL
 
-These map to numbered queries in **`sql/02_analysis_queries.sql`**:
+These map to numbered queries across the **`sql/`** practice files (same numbering as before):
 
 | Question (in plain words) | What SQL ideas it uses |
 |---------------------------|-----------------------|
@@ -61,7 +61,7 @@ These map to numbered queries in **`sql/02_analysis_queries.sql`**:
 | Show each review’s human-readable label (negative / neutral / positive) | `JOIN` reviews ↔ labels |
 | Combine labels, length buckets, keywords (e.g. “easy”) | `JOIN` + `CASE` + `LIKE` |
 
-After you load **`database/amazon.db`**, open it with **`sqlite3`** and use **`.read sql/02_analysis_queries.sql`** (or paste single queries from the file) — that prints each result set, or lets you study questions one by one.
+After you load **`database/amazon.db`**, open **`sqlite3`** from the project root and **`.read`** the topic files **in order** (basic SELECT → filters → ORDER BY → aggregates → LIKE → CASE → JOIN). You can open one file at a time in your editor and paste single queries, or run every file in sequence using the commands in Step 5.
 
 ---
 
@@ -78,7 +78,13 @@ After you load **`database/amazon.db`**, open it with **`sqlite3`** and use **`.
 |----------------|----------------|
 | `data/amazon_review.csv` | Raw reviews (comma-separated values). |
 | `sql/01_create_tables.sql` | Creates tables `labels` and `reviews` and inserts the basic label list. |
-| `sql/02_analysis_queries.sql` | Example `SELECT` questions to explore the data. |
+| `sql/02_basic_select_queries.sql` | Basic `SELECT` … `LIMIT` (columns + rows). |
+| `sql/03_filter_queries.sql` | Filtering with `WHERE`. |
+| `sql/04_order_by_queries.sql` | Sorting with `ORDER BY`. |
+| `sql/05_aggregate_queries.sql` | `COUNT`, `AVG`, `MIN`, `MAX`, `GROUP BY`. |
+| `sql/06_like_queries.sql` | Text patterns with `LIKE`. |
+| `sql/07_case_when_queries.sql` | Buckets with `CASE` … `WHEN`. |
+| `sql/08_join_queries.sql` | Combining `reviews` and `labels` with `JOIN`. |
 | `scripts/import_data.py` | Reads the CSV and fills the database. |
 | `database/amazon.db` | The SQLite database file (created when you run the import script). |
 | `requirements.txt` | Python packages needed for this project (here: **pandas**). |
@@ -145,10 +151,26 @@ Open the SQLite program on your database file:
 sqlite3 database/amazon.db
 ```
 
-Inside SQLite, dot-commands must start with a **dot**. To run the whole examples file:
+Inside that session you can chain topic files in order: run `.read sql/02_basic_select_queries.sql`, then `.read sql/03_filter_queries.sql`, and continue through `.read sql/08_join_queries.sql`.
+
+Inside SQLite, dot-commands must start with a **dot**. Run **one** topic file:
 
 ```sql
-.read sql/02_analysis_queries.sql
+.read sql/02_basic_select_queries.sql
+```
+
+Run **all** practice queries in order **without** entering interactive SQLite (from the project root):
+
+```bash
+sqlite3 database/amazon.db <<'EOF'
+.read sql/02_basic_select_queries.sql
+.read sql/03_filter_queries.sql
+.read sql/04_order_by_queries.sql
+.read sql/05_aggregate_queries.sql
+.read sql/06_like_queries.sql
+.read sql/07_case_when_queries.sql
+.read sql/08_join_queries.sql
+EOF
 ```
 
 **Common mistake:** typing `read` without the dot. SQLite then thinks you started a SQL statement and shows `...>` until you cancel (for example with **Ctrl+C**) and try again with `.read`.
@@ -157,12 +179,6 @@ To leave SQLite:
 
 ```sql
 .quit
-```
-
-**One-shot from the terminal (without entering interactive mode):**
-
-```bash
-sqlite3 database/amazon.db ".read sql/02_analysis_queries.sql"
 ```
 
 ---
